@@ -30,7 +30,7 @@
 
 ## 8. 输出
 
-示例输出实例详情、Topic 名称和 AccessKey ID，不输出 SecretKey。
+示例输出实例详情、Topic 名称和 AccessKey ID，不输出 SecretKey。实例详情和 AccessKey ID 已标记为 sensitive，会在标准 CLI 输出中脱敏。
 
 ## 9. 注意事项
 

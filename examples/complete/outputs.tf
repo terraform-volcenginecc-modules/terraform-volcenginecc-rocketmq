@@ -1,6 +1,7 @@
 output "instance" {
   description = "Created RocketMQ instance details."
   value       = module.rocketmq.instance
+  sensitive   = true
 }
 
 output "topic_names" {
@@ -11,4 +12,5 @@ output "topic_names" {
 output "access_key_ids" {
   description = "Created AccessKey IDs. Secret keys are not output."
   value       = module.rocketmq.access_key_ids
+  sensitive   = true
 }

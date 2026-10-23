@@ -30,7 +30,7 @@ The published RocketMQ module manages the instance, normal Topics, Groups, allow
 
 ## 8. Outputs
 
-The example returns instance details, Topic names, and AccessKey IDs without secret keys.
+The example returns instance details, Topic names, and AccessKey IDs without secret keys. Instance details and AccessKey IDs are marked sensitive and redacted in standard CLI output.
 
 ## 9. Notes
 

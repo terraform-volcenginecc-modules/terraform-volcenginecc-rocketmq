@@ -1,6 +1,7 @@
 output "instance_id" {
   description = "Created RocketMQ instance ID."
   value       = module.rocketmq.instance.id
+  sensitive   = true
 }
 
 output "topic_names" {

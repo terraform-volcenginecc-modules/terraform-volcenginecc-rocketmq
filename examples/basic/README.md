@@ -30,7 +30,7 @@ The published RocketMQ module manages the instance, Topic, and Group.
 
 ## 8. Outputs
 
-The example returns the instance ID and Topic names.
+The example returns the instance ID and Topic names. The instance ID is marked sensitive and redacted in standard CLI output.
 
 ## 9. Notes
 
