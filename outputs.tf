@@ -1,11 +1,12 @@
 output "instance" {
-  description = "Created RocketMQ instance identifiers and private connection information."
+  description = "Created RocketMQ instance identifiers and connection information. Sensitive to avoid exposing endpoints in CLI output; state remains unencrypted unless the configured backend encrypts it."
   value = {
     id              = volcenginecc_rocketmq_instance.this.instance_id
     name            = volcenginecc_rocketmq_instance.this.instance_name
     status          = volcenginecc_rocketmq_instance.this.instance_status
     connection_info = volcenginecc_rocketmq_instance.this.connection_info
   }
+  sensitive = true
 }
 
 output "topics" {
@@ -30,8 +31,9 @@ output "groups" {
 }
 
 output "access_key_ids" {
-  description = "RocketMQ AccessKey IDs keyed by the input logical keys. Secret keys are not output."
+  description = "RocketMQ AccessKey IDs keyed by the input logical keys. Sensitive to avoid exposing identifiers in CLI output; secret keys are not output."
   value       = { for key, access_key in volcenginecc_rocketmq_access_key.this : key => access_key.access_key }
+  sensitive   = true
 }
 
 output "allow_list_ids" {

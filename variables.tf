@@ -56,6 +56,24 @@ variable "instance" {
   }
 
   validation {
+    condition = (
+      var.instance.period_unit == null ?
+      true :
+      contains(["Monthly", "Yearly"], var.instance.period_unit)
+      ) && (
+      var.instance.charge_type != "PrePaid" ?
+      true :
+      var.instance.period == null ?
+      false :
+      (
+        (coalesce(var.instance.period_unit, "Monthly") == "Monthly" && var.instance.period == floor(var.instance.period) && var.instance.period >= 1 && var.instance.period <= 9) ||
+        (coalesce(var.instance.period_unit, "Monthly") == "Yearly" && var.instance.period == floor(var.instance.period) && var.instance.period >= 1 && var.instance.period <= 3)
+      )
+    )
+    error_message = "PrePaid instances require period: Monthly (the default when period_unit is omitted) allows 1-9 months; Yearly allows 1-3 years."
+  }
+
+  validation {
     condition     = var.instance.send_receive_ratio == null ? true : (var.instance.version == "5.x" && var.instance.send_receive_ratio >= 0 && var.instance.send_receive_ratio <= 100)
     error_message = "instance.send_receive_ratio is supported only for 5.x and must be from 0 to 100."
   }
@@ -119,6 +137,16 @@ variable "allow_lists" {
   validation {
     condition     = alltrue([for allow_list in values(var.allow_lists) : length(allow_list.ip_addresses) > 0])
     error_message = "Every allow list must contain at least one IPv4 address or CIDR."
+  }
+
+  validation {
+    condition = alltrue(flatten([
+      for allow_list in values(var.allow_lists) : [
+        for address in allow_list.ip_addresses :
+        can(regex("^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?:/(?:[0-9]|[12][0-9]|3[0-2]))?$", address))
+      ]
+    ]))
+    error_message = "Every allow_lists.ip_addresses value must be an IPv4 address or IPv4 CIDR with a prefix from /0 through /32."
   }
 }
 
