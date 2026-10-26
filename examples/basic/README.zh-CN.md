@@ -34,4 +34,4 @@
 
 ## 9. 注意事项
 
-VPC 和 Subnet 仍由调用方管理。真实云 apply 后，第二次 `terraform plan` 必须显示无变更。
+VPC 和 Subnet 仍由调用方管理。真实云 apply 后，第二次 `terraform plan` 必须显示无变更。销毁时必须执行 `terraform destroy -parallelism=1`，因为 RocketMQ 异步删除资源，并发删除可能返回 `InvalidInstanceStatus`。

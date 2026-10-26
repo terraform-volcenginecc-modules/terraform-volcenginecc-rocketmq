@@ -34,4 +34,4 @@ The example returns the instance ID and Topic names. The instance ID is marked s
 
 ## 9. Notes
 
-VPC and subnet remain caller-owned. A second real-cloud `terraform plan` after apply must report no changes.
+VPC and subnet remain caller-owned. A second real-cloud `terraform plan` after apply must report no changes. Destroy with `terraform destroy -parallelism=1` because RocketMQ deletion is asynchronous and concurrent deletion can return `InvalidInstanceStatus`.

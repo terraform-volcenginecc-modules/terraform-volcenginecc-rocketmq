@@ -34,4 +34,4 @@
 
 ## 9. 注意事项
 
-Provider 没有独立的 DLQ 或 RocketMQ 告警资源。请在模块外配置 CloudMonitor，并在真实云 apply 后确认第二次 plan 无变更。模块当前拒绝在 4.8 中配置事务或顺序 Topic，也拒绝在 5.x 中配置 AccessKey，避免已知服务端能力限制造成持续漂移或 apply 失败。
+Provider 没有独立的 DLQ 或 RocketMQ 告警资源。请在模块外配置 CloudMonitor，并在真实云 apply 后确认第二次 plan 无变更。销毁时必须执行 `terraform destroy -parallelism=1`，因为 RocketMQ 异步删除资源，并发删除可能返回 `InvalidInstanceStatus`。模块当前拒绝在 4.8 中配置事务或顺序 Topic，也拒绝在 5.x 中配置 AccessKey，避免已知服务端能力限制造成持续漂移或 apply 失败。

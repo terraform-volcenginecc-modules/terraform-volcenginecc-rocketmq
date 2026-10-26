@@ -85,6 +85,7 @@ module "rocketmq" {
 - Provider 将 `allow_list_ids`、Topic 权限和若干可选字段定义为 Optional+Computed。模块显式提供其管理值，但必须通过真实云二次 `plan` 确认无漂移。
 - RocketMQ 根据消费者 Group 的重试配置生成重试和死信行为；Provider 没有独立 DLQ 资源，因此模块不管理死信 Topic。
 - Provider 没有 RocketMQ 专用告警资源。请使用输出的实例和 Group 标识，在模块外组合 CloudMonitor 告警。
+- 销毁 RocketMQ 资源时必须执行 `terraform destroy -parallelism=1`。RocketMQ 会异步删除关联的 Topic、Group、AccessKey、白名单和实例，并发删除可能返回 `InvalidInstanceStatus`。
 - `instance` 和 `access_key_ids` 输出已标记为 sensitive，以避免端点和 AccessKey ID 出现在标准 CLI 输出中。Provider v0.0.71 会在 AccessKey 创建后仅返回一次 `secret_key`，但其 schema 尚未标记为 sensitive；本模块不会输出该字段。
 - Terraform 的 sensitive 标记只会在 CLI 输出中脱敏，不会加密 State 或保存的 Plan 文件。请使用启用加密且遵循最小权限原则的远端 Backend，将 Plan 文件按敏感信息保管，且不要提交这两类文件。
 - Provider 支持导入；将已有对象导入本模块时，需要匹配模块资源地址并提供完整配置。

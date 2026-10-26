@@ -34,4 +34,4 @@ The example returns instance details, Topic names, and AccessKey IDs without sec
 
 ## 9. Notes
 
-The provider has no standalone DLQ or RocketMQ alarm resource. Configure CloudMonitor outside the module and verify a no-change second plan after real-cloud apply. The module rejects transactional and ordered Topics for 4.8, and rejects AccessKeys for 5.x, to prevent known service-side drift and apply failures.
+The provider has no standalone DLQ or RocketMQ alarm resource. Configure CloudMonitor outside the module and verify a no-change second plan after real-cloud apply. Destroy with `terraform destroy -parallelism=1` because RocketMQ deletion is asynchronous and concurrent deletion can return `InvalidInstanceStatus`. The module rejects transactional and ordered Topics for 4.8, and rejects AccessKeys for 5.x, to prevent known service-side drift and apply failures.

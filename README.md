@@ -85,6 +85,7 @@ module "rocketmq" {
 - The provider exposes `allow_list_ids`, topic policies, and several optional values as Optional+Computed. The module supplies managed values explicitly, but a real-cloud second `plan` must confirm no drift.
 - RocketMQ creates retry and dead-letter behavior from consumer Group retry configuration; the provider has no standalone DLQ resource, so DLQ topics are not managed here.
 - The provider has no RocketMQ-specific alert resource. Compose CloudMonitor alarms outside this module with the output instance and Group identifiers.
+- Destroy RocketMQ resources with `terraform destroy -parallelism=1`. RocketMQ deletes related Topics, Groups, AccessKeys, allow lists, and the instance asynchronously; concurrent deletion can return `InvalidInstanceStatus`.
 - `instance` and `access_key_ids` outputs are marked sensitive to redact endpoint and AccessKey ID values from standard CLI output. The provider's `secret_key` is returned once after AccessKey creation and is stored in Terraform state by provider v0.0.71 without a sensitive schema marker; this module never outputs it.
 - Terraform sensitive values are redacted in CLI output only. They are not encrypted in state files or saved plan files. Use an encrypted remote backend with least-privilege access, protect plan files as secrets, and do not commit either artifact.
 - Import is supported by the provider, but importing pre-existing objects into this module requires matching the module's resource addresses and complete configuration.
