@@ -81,7 +81,6 @@ module "rocketmq" {
 ## 9. 注意事项
 
 - RocketMQ 5.x 及其 TPS 比例可能需要服务白名单资格；执行 apply 前请确认账户可用规格和可用区。
-- 线上验证表明 4.8 会将事务和顺序 Topic 回读为普通 Topic，因此模块在 4.8 下拒绝非普通 Topic，避免二次 plan 持续替换。5.x 当前不支持 AccessKey，配置 `access_keys` 会在 plan 阶段失败。
 - Provider 将 `allow_list_ids`、Topic 权限和若干可选字段定义为 Optional+Computed。模块显式提供其管理值，但必须通过真实云二次 `plan` 确认无漂移。
 - RocketMQ 根据消费者 Group 的重试配置生成重试和死信行为；Provider 没有独立 DLQ 资源，因此模块不管理死信 Topic。
 - Provider 没有 RocketMQ 专用告警资源。请使用输出的实例和 Group 标识，在模块外组合 CloudMonitor 告警。
