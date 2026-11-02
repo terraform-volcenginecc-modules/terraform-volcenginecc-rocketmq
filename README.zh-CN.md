@@ -1,6 +1,6 @@
 # terraform-volcenginecc-rocketmq
 
-用于私有网络 Volcengine RocketMQ 实例及消息对象的 Terraform 模块草案。
+用于私有网络 Volcengine RocketMQ 实例及消息对象的 Terraform 模块。
 
 ## 1. 概述
 
@@ -88,4 +88,4 @@ module "rocketmq" {
 - `instance` 和 `access_key_ids` 输出已标记为 sensitive，以避免端点和 AccessKey ID 出现在标准 CLI 输出中。Provider v0.0.71 会在 AccessKey 创建后仅返回一次 `secret_key`，但其 schema 尚未标记为 sensitive；本模块不会输出该字段。
 - Terraform 的 sensitive 标记只会在 CLI 输出中脱敏，不会加密 State 或保存的 Plan 文件。请使用启用加密且遵循最小权限原则的远端 Backend，将 Plan 文件按敏感信息保管，且不要提交这两类文件。
 - Provider 支持导入；将已有对象导入本模块时，需要匹配模块资源地址并提供完整配置。
-- 当前状态：`draft`。静态检查不能替代真实云 create、二次无变更 plan、update、replacement、destroy 和删除后查询确认。
+- 发布状态：`v1.0.0`。仅支持本 README 中已说明的配置和限制。请在目标账号中审核 plan 后再执行 apply，并在 apply 后确认第二次 plan 无变更。

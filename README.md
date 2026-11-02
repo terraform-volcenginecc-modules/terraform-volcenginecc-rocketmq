@@ -1,6 +1,6 @@
 # terraform-volcenginecc-rocketmq
 
-Draft Terraform module for a private Volcengine RocketMQ instance and its messaging objects.
+Terraform module for a private Volcengine RocketMQ instance and its messaging objects.
 
 ## 1. Overview
 
@@ -89,4 +89,4 @@ module "rocketmq" {
 - `instance` and `access_key_ids` outputs are marked sensitive to redact endpoint and AccessKey ID values from standard CLI output. The provider's `secret_key` is returned once after AccessKey creation and is stored in Terraform state by provider v0.0.71 without a sensitive schema marker; this module never outputs it.
 - Terraform sensitive values are redacted in CLI output only. They are not encrypted in state files or saved plan files. Use an encrypted remote backend with least-privilege access, protect plan files as secrets, and do not commit either artifact.
 - Import is supported by the provider, but importing pre-existing objects into this module requires matching the module's resource addresses and complete configuration.
-- Status: `draft`. Static checks do not replace real-cloud create, second no-change plan, update, replacement, destroy, and post-delete read-back verification.
+- Release status: `v1.0.0`. Support is limited to the configurations and constraints documented in this README. Review the plan in the target account before apply, and confirm a second plan after apply has no changes.
